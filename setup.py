@@ -12,7 +12,7 @@ if sys.version_info < (3, 2):
 
 
 setup(name='jump_consistent_hash',
-      version='1.0.1',
+      version='1.0.2',
       description='Implementation of the Jump Consistent Hash algorithm',
       author='Peter Renström',
       license='MIT',
