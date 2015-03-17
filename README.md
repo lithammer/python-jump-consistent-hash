@@ -6,6 +6,14 @@ Python (3) implementation of the jump consistent hash algorithm by John Lamping 
 
 [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
+## Usage
+
+```python
+>>> import jump
+>>> jump.hash(256, 1024)
+520
+```
+
 ## License
 
 MIT
