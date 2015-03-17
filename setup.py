@@ -1,4 +1,14 @@
+from __future__ import print_function
+
+import sys
+
 from setuptools import setup
+
+
+if sys.version_info < (3, 2):
+    print('ERROR: jump-consistent-hash requires Python version 3.2 or newer.',
+          file=sys.stderr)
+    sys.exit(1)
 
 
 setup(name='jump_consistent_hash',
