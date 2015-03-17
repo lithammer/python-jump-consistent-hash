@@ -4,7 +4,7 @@ from setuptools import setup
 setup(name='jump_consistent_hash',
       version='1.0.0',
       description='Implementation of the Jump Consistent Hash algorithm',
-      author='Peter Renstroem',
+      author='Peter Renström',
       license='MIT',
       url='https://github.com/renstrom/python-jump-consistent-hash',
       packages=['jump'],
