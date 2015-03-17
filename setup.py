@@ -22,6 +22,7 @@ setup(name='jump_consistent_hash',
       keywords=[
           'jump hash',
           'jumphash',
+          'jump consistent hash',
           'consistent hash',
           'hash algorithm',
           'hash'
