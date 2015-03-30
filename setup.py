@@ -10,6 +10,7 @@ Usage
 `````
 
 .. code:: python
+
     >>> import jump
     >>> jump.hash(256, 1024)
     520
@@ -17,6 +18,7 @@ Usage
 Or if you want to use the C++ extension:
 
 .. code:: python
+
     >>> jump.fasthash(256, 1024)
     520
 
