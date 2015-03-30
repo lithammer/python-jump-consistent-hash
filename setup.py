@@ -3,7 +3,7 @@ from __future__ import print_function
 
 import sys
 
-from setuptools import setup
+from setuptools import setup, find_packages, Extension
 
 
 if sys.version_info < (3, 2):
@@ -18,8 +18,14 @@ setup(name='jump_consistent_hash',
       author='Peter Renström',
       license='MIT',
       url='https://github.com/renstrom/python-jump-consistent-hash',
-      packages=['jump'],
-      test_suite='tests',
+      packages=find_packages(),
+      ext_modules=[
+          Extension('_jump', sources=[
+              'jump/jump.cpp',
+              'jump/jumpmodule.c'
+          ])
+      ],
+      test_suite='jump.tests',
       keywords=[
           'jump hash',
           'jumphash',
