@@ -3,8 +3,8 @@
 Jump Consistent Hash
 --------------------
 
-Python (3) implementation of the jump consistent hash algorithm by John Lamping
-and Eric Veach[1].
+Python implementation of the jump consistent hash algorithm by John Lamping and
+Eric Veach[1].
 
 Usage
 `````
@@ -28,17 +28,7 @@ Links
 [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
 """
-from __future__ import print_function
-
-import sys
-
 from setuptools import setup, find_packages, Extension
-
-
-if sys.version_info < (3, 2):
-    print('ERROR: jump-consistent-hash requires Python version 3.2 or newer.',
-          file=sys.stderr)
-    sys.exit(1)
 
 
 setup(name='jump_consistent_hash',
@@ -68,6 +58,8 @@ setup(name='jump_consistent_hash',
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 2.6',
+          'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.2',
           'Programming Language :: Python :: 3.3',
           'Programming Language :: Python :: 3.4'

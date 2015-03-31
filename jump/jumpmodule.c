@@ -1,13 +1,17 @@
 #include <Python.h>
 #include "jump.h"
 
+#if PY_MAJOR_VERSION >= 3
+#define IS_PY3K
+#endif
+
 static PyObject *
 jump_hash(PyObject *self, PyObject *args)
 {
     uint64_t key;
     int32_t num_buckets;
 
-    if (!PyArg_ParseTuple(args, "li", &key, &num_buckets)) {
+    if (!PyArg_ParseTuple(args, "Li", &key, &num_buckets)) {
         return NULL;
     }
 
@@ -25,6 +29,7 @@ static PyMethodDef JumpMethods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+#if PY_MAJOR_VERSION >= 3
 static struct PyModuleDef jumpmodule = {
     PyModuleDef_HEAD_INIT,
     "jump",
@@ -35,6 +40,14 @@ static struct PyModuleDef jumpmodule = {
 
 PyMODINIT_FUNC
 PyInit__jump(void)
+#else
+void
+init_jump(void)
+#endif
 {
+#if PY_MAJOR_VERSION >= 3
     return PyModule_Create(&jumpmodule);
+#else
+    (void) Py_InitModule("_jump", JumpMethods);
+#endif
 }

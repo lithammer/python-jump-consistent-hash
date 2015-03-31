@@ -1,7 +1,7 @@
 all:
 
 build:
-	python3 setup.py build
+	python setup.py build
 
 # A race condition occurs where the file hasn't been completely copied before
 # the testrunner tries to import `_jump`. To prevent this we copy the file
@@ -11,10 +11,7 @@ build:
 
 
 test: build %.so
-	python3 setup.py test
-
-pep8:
-	pep8 jump
+	python setup.py test
 
 clean:
 	rm -rfv build dist *.egg-info *.so
