@@ -32,7 +32,7 @@ from setuptools import setup, find_packages, Extension
 
 
 setup(name='jump_consistent_hash',
-      version='1.1.1',
+      version='2.0.0',
       description='Implementation of the Jump Consistent Hash algorithm',
       long_description=__doc__,
       author='Peter Renström',
