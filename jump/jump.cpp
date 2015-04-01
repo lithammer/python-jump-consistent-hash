@@ -13,5 +13,5 @@ JumpConsistentHash(uint64_t key, int32_t num_buckets)
         j = (b + 1) * (double(1LL << 31) / double((key >> 33) + 1));
     }
 
-    return b;
+    return (int32_t)b;
 }
