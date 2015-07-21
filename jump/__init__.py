@@ -10,7 +10,7 @@ if sys.version_info[0] > 2:
 
 
 def hash(key, num_buckets):
-    """Generate a number in the range [0, num_buckets].
+    """Generate a number in the range [0, num_buckets).
 
     Fast, minimal memory, consistent hash algorithm (Jump Consistent Hash).
 
