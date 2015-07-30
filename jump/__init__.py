@@ -14,13 +14,20 @@ def hash(key, num_buckets):
 
     Fast, minimal memory, consistent hash algorithm (Jump Consistent Hash).
 
-    :param int key: The key to use
-    :param int num_buckets: Number of buckets to use
+    Args:
+        key (int): The key to hash.
+        num_buckets (int): Number of buckets to use.
+
+    Returns:
+        The bucket number `key` computes to.
+
+    Raises:
+        ValueError: If `num_buckets` is not a positive number.
     """
     b, j = -1, 0
 
     if num_buckets < 1:
-        raise ValueError('num_buckets must be greater than 0')
+        raise ValueError('num_buckets must be a positive number')
 
     while j < num_buckets:
         b = int(j)

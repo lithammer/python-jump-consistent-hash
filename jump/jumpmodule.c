@@ -15,8 +15,8 @@ jump_hash(PyObject *self, PyObject *args)
         return NULL;
     }
 
-    if (num_buckets < 1 ) {
-        PyErr_SetString(PyExc_ValueError, "num_buckets must be greater than 0");
+    if (num_buckets < 1) {
+        PyErr_SetString(PyExc_ValueError, "num_buckets must be a positive number");
         return NULL;
     }
 
