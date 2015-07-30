@@ -1,3 +1,6 @@
+
+"""Fast, minimal memory, consistent hash algorithm."""
+
 import sys
 
 from _jump import hash as fasthash
@@ -11,8 +14,6 @@ if sys.version_info[0] > 2:
 
 def hash(key, num_buckets):
     """Generate a number in the range [0, num_buckets).
-
-    Fast, minimal memory, consistent hash algorithm (Jump Consistent Hash).
 
     Args:
         key (int): The key to hash.

@@ -38,8 +38,8 @@ static PyMethodDef JumpMethods[] = {{"hash", jump_hash, METH_VARARGS, doc_hash},
                                     {NULL, NULL, 0, NULL}};
 
 #if PY_MAJOR_VERSION >= 3
-static struct PyModuleDef jumpmodule = {PyModuleDef_HEAD_INIT, "jump", NULL, -1,
-                                        JumpMethods};
+static struct PyModuleDef jumpmodule = {PyModuleDef_HEAD_INIT, "jump", doc_jump,
+                                        -1, JumpMethods};
 
 PyMODINIT_FUNC PyInit__jump(void)
 #else
@@ -49,6 +49,6 @@ void init_jump(void)
 #if PY_MAJOR_VERSION >= 3
   return PyModule_Create(&jumpmodule);
 #else
-  (void)Py_InitModule("_jump", JumpMethods);
+  (void)Py_InitModule3("_jump", JumpMethods, doc_jump);
 #endif
 }
