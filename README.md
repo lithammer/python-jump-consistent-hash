@@ -21,6 +21,24 @@ Or if you want to use the C++ extension:
 520
 ```
 
+If you want to use a `str` as a key instead of an `int`, you can pass it through a hash function to compute a real key. Here's a couple of examples using Python 3:
+
+```python
+>>> import hashlib
+>>> int(hashlib.md5(b'127.0.0.1').hexdigest(), 16)
+325870950296970981340734819828239218902
+
+>>> int(hashlib.sha1(b"127.0.0.1").hexdigest(), 16)
+431133456357828263809343936597625557575256328153
+
+>>> import binascii
+binascii.crc32(b'127.0.0.1')
+3619153832
+
+>>> abs(hash('127.0.0.1'))
+1745092129592664124
+```
+
 ## Benchmarks
 
 Here's some benchmarks comparing the pure Python solution vs the C++ extension. Interestingly, the pure Python solution running on PyPy is almost as fast as the C++ variant on CPython. These benchmarks were run on my mid 2013 MacBook Air, so take it with a grain of salt.
