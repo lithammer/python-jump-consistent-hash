@@ -28,7 +28,7 @@ If you want to use a `str` as a key instead of an `int`, you can pass it through
 >>> int(hashlib.md5(b'127.0.0.1').hexdigest(), 16)
 325870950296970981340734819828239218902
 
->>> int(hashlib.sha1(b"127.0.0.1").hexdigest(), 16)
+>>> int(hashlib.sha1(b'127.0.0.1').hexdigest(), 16)
 431133456357828263809343936597625557575256328153
 
 >>> import binascii
