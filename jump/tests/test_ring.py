@@ -26,7 +26,7 @@ class TestHashRing(unittest.TestCase):
 
     def test_get_node(self):
         tests = [
-            ('foo', 'c'),
+            ('foo', 'a'),
             ('bar', 'b'),
             ('baz', 'a'),
             ('qux', 'a')
@@ -70,5 +70,6 @@ class TestHashRing(unittest.TestCase):
 
     def test_empty_ring(self):
         """Verify that getting a node in an empty ring raises an exception."""
-        map(self.ring.remove_node, 'abc')
+        for c in 'abc':
+            self.ring.remove_node(c)
         self.assertRaises(NoNodeError, self.ring.get_node, 'a')

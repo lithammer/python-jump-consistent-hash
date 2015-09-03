@@ -25,7 +25,8 @@ class HashRing(object):
 
     def get_node(self, node):
         try:
-            i = jump.hash(abs(binascii.crc32(node)), len(self._nodes))
+            i = jump.hash(binascii.crc32(node.encode('ascii')) & 0xffffffff,
+                          len(self._nodes))
         except ValueError:
             raise NoNodeError('no nodes present in ring')
         return self._nodes[i]
