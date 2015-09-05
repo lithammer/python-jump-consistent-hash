@@ -7,6 +7,10 @@ import bisect
 import jump
 
 
+def _crc32(data):
+    return binascii.crc32(data.encode('ascii')) & 0xffffffff
+
+
 class NoNodeError(Exception):
     """No no present in ring."""
 
@@ -17,16 +21,16 @@ class DuplicateNodeError(Exception):
 
 class HashRing(object):
 
-    def __init__(self, nodes=None):
+    def __init__(self, nodes=None, hasher=_crc32):
         if not nodes:
             raise ValueError('nodes must not be empty')
 
         self._nodes = sorted(nodes)
+        self._hasher = hasher
 
     def get_node(self, node):
         try:
-            i = jump.hash(binascii.crc32(node.encode('ascii')) & 0xffffffff,
-                          len(self._nodes))
+            i = jump.hash(self._hasher(node), len(self._nodes))
         except ValueError:
             raise NoNodeError('no nodes present in ring')
         return self._nodes[i]
