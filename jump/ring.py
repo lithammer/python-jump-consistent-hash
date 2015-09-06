@@ -67,19 +67,19 @@ class HashRing(object):
         return '%s(%s)' % (self.__class__.__name__, self._nodes)
 
     def __lt__(self, other):
-        return self._nodes.__lt__(other)
+        return self._nodes.__lt__(other._nodes)
 
     def __le__(self, other):
-        return self._nodes.__le__(other)
+        return self._nodes.__le__(other._nodes)
 
     def __eq__(self, other):
-        return self._nodes.__eq__(other)
+        return self._nodes.__eq__(other._nodes)
 
     def __ne__(self, other):
-        return self._nodes.__ne__(other)
+        return self._nodes.__ne__(other._nodes)
 
     def __gt__(self, other):
-        return self._nodes.__gt__(other)
+        return self._nodes.__gt__(other._nodes)
 
     def __ge__(self, other):
-        return self._nodes.__ge__(other)
+        return self._nodes.__ge__(other._nodes)

@@ -58,18 +58,24 @@ class TestHashRing(unittest.TestCase):
         ring = HashRing(['b', 'd', 'f'])
 
         tests = [
-            ('a', ['a', 'b', 'd', 'f']),
-            ('c', ['a', 'b', 'c', 'd', 'f']),
-            ('e', ['a', 'b', 'c', 'd', 'e', 'f'])
+            ('a', HashRing(['a', 'b', 'd', 'f'])),
+            ('c', HashRing(['a', 'b', 'c', 'd', 'f'])),
+            ('e', HashRing(['a', 'b', 'c', 'd', 'e', 'f']))
         ]
 
         for node, expect in tests:
             ring.add_node(node)
             self.assertEqual(ring, expect)
-            self.assertNotEqual(ring, reversed(expect))
 
     def test_empty_ring(self):
         """Verify that getting a node in an empty ring raises an exception."""
         for c in 'abc':
             self.ring.remove_node(c)
         self.assertRaises(NoNodeError, self.ring.get_node, 'a')
+
+    def test_compare_rings(self):
+        self.assertLess(HashRing(['a']), HashRing(['a', 'b', 'c']))
+        self.assertLess(HashRing(['a', 'b']), HashRing(['a', 'b', 'c']))
+        self.assertEqual(HashRing(['a', 'b', 'c']), HashRing(['a', 'b', 'c']))
+        self.assertGreater(HashRing(['a', 'b', 'c']), HashRing(['a', 'b']))
+        self.assertGreater(HashRing(['a', 'b', 'c']), HashRing(['a']))
