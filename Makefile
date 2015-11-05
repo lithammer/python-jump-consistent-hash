@@ -1,13 +1,14 @@
-all:
+PYTHON ?= python
 
-build:
-	python setup.py build
+all: build
+
+build_ext: _jump.so
 
 _jump.so: jump/jump.cpp jump/jump.h jump/jumpmodule.c
-	python setup.py build_ext --inplace
+	$(PYTHON) setup.py build_ext --inplace
 
-test: _jump.so
-	python setup.py test
+test: build_ext
+	$(PYTHON) setup.py test
 
 clean:
 	rm -rfv build dist *.egg-info *.so
