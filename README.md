@@ -32,11 +32,11 @@ If you want to use a `str` as a key instead of an `int`, you can pass it through
 431133456357828263809343936597625557575256328153
 
 >>> import binascii
-binascii.crc32(b'127.0.0.1')
+>>> binascii.crc32(b'127.0.0.1') & 0xffffffff
 3619153832
 
 >>> abs(hash('127.0.0.1'))
-1745092129592664124
+7536019783825143230
 ```
 
 ## Benchmarks

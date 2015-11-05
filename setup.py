@@ -36,11 +36,11 @@ using Python 3:
       431133456357828263809343936597625557575256328153
 
       >>> import binascii
-      binascii.crc32(b'127.0.0.1')
+      >>> binascii.crc32(b'127.0.0.1') & 0xffffffff
       3619153832
 
       >>> abs(hash('127.0.0.1'))
-      1745092129592664124
+      7536019783825143230
 
 Links
 `````
@@ -82,5 +82,6 @@ setup(name='jump_consistent_hash',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.2',
           'Programming Language :: Python :: 3.3',
-          'Programming Language :: Python :: 3.4'
+          'Programming Language :: Python :: 3.4',
+          'Programming Language :: Python :: 3.5'
       ])
