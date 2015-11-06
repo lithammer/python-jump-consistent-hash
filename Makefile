@@ -1,6 +1,6 @@
 PYTHON ?= python
 
-all: build
+all: build_ext
 
 build_ext: _jump.so
 
