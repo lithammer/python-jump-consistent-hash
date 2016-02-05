@@ -52,7 +52,7 @@ from setuptools import setup, find_packages, Extension
 
 
 setup(name='jump_consistent_hash',
-      version='2.0.2',
+      version='2.0.2.globo',
       description='Implementation of the Jump Consistent Hash algorithm',
       long_description=__doc__,
       author='Peter Renström',
@@ -63,8 +63,9 @@ setup(name='jump_consistent_hash',
           Extension('_jump', sources=[
               'jump/jump.cpp',
               'jump/jumpmodule.c'
-          ])
+          ], include_dirs=['jump'])
       ],
+      data_files=[('_jump', ['jump/jump.h'])],
       test_suite='jump.tests',
       keywords=[
           'jump hash',
@@ -74,6 +75,7 @@ setup(name='jump_consistent_hash',
           'hash algorithm',
           'hash'
       ],
+      headers=['jump/jump.h'],
       classifiers=[
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
