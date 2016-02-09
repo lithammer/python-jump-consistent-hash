@@ -4,7 +4,7 @@ Jump Consistent Hash
 --------------------
 
 Python implementation of the jump consistent hash algorithm by John Lamping and
-Eric Veach[1]. Requires Python 2.6-2.7 or 3.2+.
+Eric Veach[1]. Requires Python 2.7 or 3.2+.
 
 Usage
 `````
@@ -78,7 +78,6 @@ setup(name='jump_consistent_hash',
           'Development Status :: 5 - Production/Stable',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 2.6',
           'Programming Language :: Python :: 2.7',
           'Programming Language :: Python :: 3.2',
           'Programming Language :: Python :: 3.3',
