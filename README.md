@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/renstrom/python-jump-consistent-hash.svg?branch=master)](https://travis-ci.org/renstrom/python-jump-consistent-hash)
 
-Python implementation of the jump consistent hash algorithm by John Lamping and Eric Veach[1]. Requires Python 2.6-2.7, or 3.2+.
+Python implementation of the jump consistent hash algorithm by John Lamping and
+Eric Veach[1]. Tested on Python 2.6, 2.7, and 3.3+.
 
 [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
@@ -21,7 +22,9 @@ Or if you want to use the C++ extension:
 520
 ```
 
-If you want to use a `str` as a key instead of an `int`, you can pass it through a hash function to compute a real key. Here's a couple of examples using Python 3:
+If you want to use a `str` as a key instead of an `int`, you can pass it
+through a hash function to compute a real key. Here's a couple of examples
+using Python 3:
 
 ```python
 >>> import hashlib
@@ -41,7 +44,10 @@ If you want to use a `str` as a key instead of an `int`, you can pass it through
 
 ## Benchmarks
 
-Here's some benchmarks comparing the pure Python solution vs the C++ extension. Interestingly, the pure Python solution running on PyPy is almost as fast as the C++ variant on CPython. These benchmarks were run on my mid 2013 MacBook Air, so take it with a grain of salt.
+Here's some benchmarks comparing the pure Python solution vs the C++ extension.
+Interestingly, the pure Python solution running on PyPy is almost as fast as
+the C++ variant on CPython. These benchmarks were run on my mid 2013 MacBook
+Air, so take it with a grain of salt.
 
 **CPython 3.4.3**
 
