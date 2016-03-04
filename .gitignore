@@ -1,0 +1,4 @@
+.cache
+.tox
+*.py[co]
+*.egg-info

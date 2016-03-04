@@ -10,5 +10,8 @@ _jump.so: jump/jump.cpp jump/jump.h jump/jumpmodule.c
 test: build_ext
 	$(PYTHON) setup.py test
 
+test-all:
+	tox --skip-missing-interpreters
+
 clean:
 	rm -rfv build dist *.egg-info *.so
