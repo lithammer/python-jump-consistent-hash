@@ -2,3 +2,5 @@
 .tox
 *.py[co]
 *.egg-info
+_jump.so
+build
