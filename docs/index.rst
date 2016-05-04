@@ -9,6 +9,11 @@ Eric Veach [1]_. Tested on Python 2.6, 2.7 and 3.3+.
 
 .. [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
+Install
+-------
+
+    $ pip install jump-consistent-hash
+
 Usage
 -----
 
