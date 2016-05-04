@@ -5,13 +5,19 @@
 #define IS_PY3K
 #endif
 
-PyDoc_STRVAR(doc_hash, "Generate a number in the range [0, num_buckets).\n\n\
-This function uses C bindings for speed.\n\n\
+PyDoc_STRVAR(doc_hash, "fasthash(key, num_buckets)\n\
+\n\
+Generate a number in the range [0, num_buckets).\n\
+\n\
+This function uses C bindings for speed.\n\
+\n\
 Args:\n\
     key (int): The key to hash.\n\
-    num_buckets (int): Number of buckets to use.\n\n\
+    num_buckets (int): Number of buckets to use.\n\
+\n\
 Returns:\n\
-    The bucket number `key` computes to.\n\n\
+    The bucket number `key` computes to.\n\
+\n\
 Raises:\n\
     ValueError: If `num_buckets` is not a positive number.\n");
 

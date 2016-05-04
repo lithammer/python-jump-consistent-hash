@@ -14,4 +14,8 @@ test-all:
 	tox --skip-missing-interpreters
 
 clean:
-	rm -rfv build dist *.egg-info *.so
+	rm -rfv build dist *.egg-info *.so docs/_build
+
+.PHONY: docs
+docs: build_ext
+	$(MAKE) -C docs html
