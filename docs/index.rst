@@ -12,7 +12,9 @@ Eric Veach [1]_. Tested on Python 2.6, 2.7 and 3.3+.
 Install
 -------
 
-    $ pip install jump-consistent-hash
+To install Jump Consistent Hash, simply run this simple command in your terminal of choice::
+
+   $ pip install jump-consistent-hash
 
 Usage
 -----
