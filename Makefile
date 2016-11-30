@@ -1,4 +1,6 @@
 PYTHON ?= python
+LINT := flake8
+LINTFLAGS := jump
 
 all: build_ext
 
@@ -13,9 +15,15 @@ test: build_ext
 test-all:
 	tox --skip-missing-interpreters
 
+.PHONY: lint
+lint:
+	$(LINT) $(LINTFLAGS)
+
+.PHONY: clean
 clean:
-	rm -rfv build dist *.egg-info *.so docs/_build
+	$(RM) _jump.so
+	$(RM) -r build dist *.egg-info docs/_build
 
 .PHONY: docs
 docs: build_ext
-	$(MAKE) -C docs html
+	$(MAKE) -C $@ html
