@@ -1,4 +1,5 @@
 #include <Python.h>
+
 #include "jump.h"
 
 #if PY_MAJOR_VERSION >= 3
@@ -43,7 +44,7 @@ static PyObject *jump_hash(PyObject *self, PyObject *args) {
 static PyMethodDef JumpMethods[] = {{"hash", jump_hash, METH_VARARGS, doc_hash},
                                     {NULL, NULL, 0, NULL}};
 
-#if PY_MAJOR_VERSION >= 3
+#ifdef IS_PY3K
 static struct PyModuleDef jumpmodule = {PyModuleDef_HEAD_INIT, "jump", doc_jump,
                                         -1, JumpMethods};
 
@@ -52,7 +53,7 @@ PyMODINIT_FUNC PyInit__jump(void)
 void init_jump(void)
 #endif
 {
-#if PY_MAJOR_VERSION >= 3
+#ifdef IS_PY3K
   return PyModule_Create(&jumpmodule);
 #else
   (void)Py_InitModule3("_jump", JumpMethods, doc_jump);
