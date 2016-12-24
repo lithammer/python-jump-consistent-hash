@@ -22,7 +22,7 @@ lint:
 .PHONY: clean
 clean:
 	$(RM) _jump.so
-	$(RM) -r build dist *.egg-info docs/_build
+	$(RM) -r build dist *.egg-info docs/_build .tox
 
 .PHONY: docs
 docs: build_ext
