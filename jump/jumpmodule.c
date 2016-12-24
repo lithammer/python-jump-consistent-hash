@@ -6,7 +6,7 @@
 #define IS_PY3K
 #endif
 
-PyDoc_STRVAR(doc_hash, "fasthash(key, num_buckets)\n\
+PyDoc_STRVAR(hash__doc__, "hash(key, num_buckets) -> int\n\
 \n\
 Generate a number in the range [0, num_buckets).\n\
 \n\
@@ -22,11 +22,11 @@ Returns:\n\
 Raises:\n\
     ValueError: If `num_buckets` is not a positive number.\n");
 
-PyDoc_STRVAR(doc_jump, "Fast, minimal memory, consistent hash algorithm.");
+PyDoc_STRVAR(jump__doc__, "Fast, minimal memory, consistent hash algorithm.");
 
 static PyObject *jump_hash(PyObject *self, PyObject *args) {
   uint64_t key;
-  int32_t num_buckets;
+  int32_t num_buckets, h;
 
   if (!PyArg_ParseTuple(args, "Li", &key, &num_buckets)) {
     return NULL;
@@ -37,16 +37,16 @@ static PyObject *jump_hash(PyObject *self, PyObject *args) {
     return NULL;
   }
 
-  int32_t h = JumpConsistentHash(key, num_buckets);
+  h = JumpConsistentHash(key, num_buckets);
   return Py_BuildValue("i", h);
 }
 
-static PyMethodDef JumpMethods[] = {{"hash", jump_hash, METH_VARARGS, doc_hash},
-                                    {NULL, NULL, 0, NULL}};
+static PyMethodDef JumpMethods[] = {
+    {"hash", jump_hash, METH_VARARGS, hash__doc__}, {NULL, NULL, 0, NULL}};
 
 #ifdef IS_PY3K
-static struct PyModuleDef jumpmodule = {PyModuleDef_HEAD_INIT, "jump", doc_jump,
-                                        -1, JumpMethods};
+static struct PyModuleDef jumpmodule = {PyModuleDef_HEAD_INIT, "jump",
+                                        jump__doc__, -1, JumpMethods};
 
 PyMODINIT_FUNC PyInit__jump(void)
 #else
@@ -56,6 +56,6 @@ void init_jump(void)
 #ifdef IS_PY3K
   return PyModule_Create(&jumpmodule);
 #else
-  (void)Py_InitModule3("_jump", JumpMethods, doc_jump);
+  (void)Py_InitModule3("_jump", JumpMethods, jump__doc__);
 #endif
 }
