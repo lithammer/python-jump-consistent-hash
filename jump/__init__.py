@@ -1,18 +1,22 @@
 
 """Fast, minimal memory, consistent hash algorithm."""
 
+from __future__ import absolute_import
+
 import sys
 
-from _jump import hash as fasthash
+try:
+    from _jump import hash as c_hash
+except ImportError:
+    c_hash = None
 
-
-__all__ = ['hash', 'fasthash']
+__all__ = ['hash']
 
 if sys.version_info[0] > 2:
     long = int
 
 
-def hash(key, num_buckets):
+def py_hash(key, num_buckets):
     """Generate a number in the range [0, num_buckets).
 
     Args:
@@ -36,3 +40,6 @@ def hash(key, num_buckets):
         j = float(b + 1) * (float(1 << 31) / float((key >> 33) + 1))
 
     return int(b)
+
+
+hash = c_hash or py_hash

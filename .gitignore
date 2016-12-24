@@ -2,6 +2,6 @@
 .tox
 *.py[co]
 *.egg-info
-_jump.so
+*.so
 build
 docs/_build
