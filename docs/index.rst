@@ -53,13 +53,9 @@ using Python 3:
 API Reference
 -------------
 
-.. autofunction:: jump.hash
-
-.. function:: jump.fasthash(key, num_buckets)
+.. function:: jump.hash(key, num_buckets)
 
    Generate a number in the range [0, num_buckets).
-
-   This function uses C bindings for speed.
 
    :param int key: The key to hash.
    :param int num_buckets: Number of buckets to use.
