@@ -30,10 +30,6 @@ Usage
    >>> jump.hash(256, 1024)
    520
 
-Unless using PyPy, it will try to compile the C++ reference implementation
-during installation. If that fails it will fallback to using the pure Python
-implementation which is about 10x slower on CPython.
-
 If you want to use a ``str`` as a key instead of an ``int``, you can pass it
 through a hash function to compute a real key. Here's a couple of examples
 using Python 3:
