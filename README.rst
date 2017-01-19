@@ -18,8 +18,8 @@ terminal of choice::
 
 Unless running PyPy the installation will try to compile the C++ reference
 implementation (unless an appropriate wheel is available). If it fails it will
-fallback to the pure Python implementation if it fails which is about 10x
-slower on CPython.
+fallback to the pure Python implementation which is about 10x slower on
+CPython.
 
 Usage
 `````
