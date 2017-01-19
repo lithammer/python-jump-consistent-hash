@@ -30,7 +30,7 @@ Usage
    >>> jump.hash(256, 1024)
    520
 
-If you want to use a `str` as a key instead of an `int`, you can pass it
+If you want to use a ``str`` as a key instead of an ``int``, you can pass it
 through a hash function to compute a real key. Here's a couple of examples
 using Python 3:
 
