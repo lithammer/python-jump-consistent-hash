@@ -58,7 +58,7 @@ def run_setup(with_binary):
     kwargs = ext_modules if with_binary else {}
 
     setup(name='jump_consistent_hash',
-          version='3.0.0',
+          version='3.0.1',
           description='Implementation of the Jump Consistent Hash algorithm',
           long_description=__doc__,
           author='Peter Renström',
