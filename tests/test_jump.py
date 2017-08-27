@@ -1,3 +1,4 @@
+import hashlib
 from unittest import TestCase
 
 import jump
@@ -25,6 +26,9 @@ class JumpConsistentHashTestCase(TestCase):
         self.assertRaises(ValueError, jump.py_hash, 0, -10)
         self.assertRaises(ValueError, jump.py_hash, 0xDEAD10CC, -666)
 
+    def test_very_large_key(self):
+        jump.py_hash(int(hashlib.sha1(b'abc').hexdigest(), 16), 5)
+
 
 class JumpConsistentHashExtensionTestCase(TestCase):
 
@@ -47,3 +51,6 @@ class JumpConsistentHashExtensionTestCase(TestCase):
     def test_negative_bucket_number(self):
         self.assertRaises(ValueError, jump.c_hash, 0, -10)
         self.assertRaises(ValueError, jump.c_hash, 0xDEAD10CC, -666)
+
+    def test_very_large_key(self):
+        jump.c_hash(int(hashlib.sha1(b'abc').hexdigest(), 16), 5)

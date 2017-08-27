@@ -28,7 +28,7 @@ static PyObject *jump_hash(PyObject *self, PyObject *args) {
   uint64_t key;
   int32_t num_buckets, h;
 
-  if (!PyArg_ParseTuple(args, "Li", &key, &num_buckets)) {
+  if (!PyArg_ParseTuple(args, "Ki", &key, &num_buckets)) {
     return NULL;
   }
 
