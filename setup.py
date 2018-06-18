@@ -61,9 +61,9 @@ def run_setup(with_binary):
           version='3.0.1',
           description='Implementation of the Jump Consistent Hash algorithm',
           long_description=__doc__,
-          author='Peter Renström',
+          author='Peter Lithammer',
           license='MIT',
-          url='https://github.com/renstrom/python-jump-consistent-hash',
+          url='https://github.com/lithammer/python-jump-consistent-hash',
           packages=find_packages(),
           cmdclass={'build_ext': ve_build_ext},
           keywords=[
