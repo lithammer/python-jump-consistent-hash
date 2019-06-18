@@ -113,6 +113,6 @@ install:
   - "${PIP} install cibuildwheel==0.10.2"
 script:
   - make lint
-  - make test
+  - make test TESTRUNNER=pytest
   - git stash --all # Restore fresh checkout
   - cibuildwheel --output-dir dist
