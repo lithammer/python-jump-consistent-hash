@@ -71,7 +71,7 @@ matrix:
         - TOXENV=py27
         - CIBW_BUILD=cp27-*
         - CIBW_TEST_COMMAND="make -C {project} lint test"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
@@ -86,7 +86,7 @@ matrix:
         - TOXENV=py34
         - CIBW_BUILD=cp34-*
         - CIBW_TEST_COMMAND="make -C {project} lint test"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
@@ -101,7 +101,7 @@ matrix:
         - TOXENV=py35
         - CIBW_BUILD=cp35-*
         - CIBW_TEST_COMMAND="make -C {project} lint test"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
@@ -116,7 +116,7 @@ matrix:
         - TOXENV=py36
         - CIBW_BUILD=cp36-*
         - CIBW_TEST_COMMAND="make -C {project} lint test"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
@@ -131,7 +131,7 @@ matrix:
         - TOXENV=py37
         - CIBW_BUILD=cp37-*
         - CIBW_TEST_COMMAND="make -C {project} lint test"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
