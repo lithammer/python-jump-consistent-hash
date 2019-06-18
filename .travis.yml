@@ -73,7 +73,7 @@ matrix:
         - CIBW_TEST_COMMAND="make -C {project} lint test"
         - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
-        - ${PIP} install cibuildwheel==0.10.2
+        - ${PIP} install cibuildwheel==0.11.1
       script:
         - cibuildwheel --output-dir dist
 
@@ -88,7 +88,7 @@ matrix:
         - CIBW_TEST_COMMAND="make -C {project} lint test"
         - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
-        - ${PIP} install cibuildwheel==0.10.2
+        - ${PIP} install cibuildwheel==0.11.1
       script:
         - cibuildwheel --output-dir dist
 
@@ -103,7 +103,7 @@ matrix:
         - CIBW_TEST_COMMAND="make -C {project} lint test"
         - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
-        - ${PIP} install cibuildwheel==0.10.2
+        - ${PIP} install cibuildwheel==0.11.1
       script:
         - cibuildwheel --output-dir dist
 
@@ -118,7 +118,7 @@ matrix:
         - CIBW_TEST_COMMAND="make -C {project} lint test"
         - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
-        - ${PIP} install cibuildwheel==0.10.2
+        - ${PIP} install cibuildwheel==0.11.1
       script:
         - cibuildwheel --output-dir dist
 
@@ -133,17 +133,17 @@ matrix:
         - CIBW_TEST_COMMAND="make -C {project} lint test"
         - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8 tox"
       install:
-        - ${PIP} install cibuildwheel==0.10.2
+        - ${PIP} install cibuildwheel==0.11.1
       script:
         - cibuildwheel --output-dir dist
 
 install:
   - ${PIP} install -U pip
   - ${PIP} install flake8 tox
-  - ${PIP} install cibuildwheel==0.10.2
+  - ${PIP} install cibuildwheel==0.11.1
 
 script:
   - make lint
   - make test
   - git stash --all # Restore fresh checkout
-  - cibuildwheel --output-dir dist
+  - cibuildwheel --output-dir wheelhouse
