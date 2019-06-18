@@ -8,15 +8,13 @@ PLATFORMS = manylinux1_x86_64 manylinux1_i686 manylinux2010_x86_64
 
 all: build
 
-build: build_ext
-
-build_ext: _jump.so
+build: _jump.so
 
 _jump.so: jump/jump.c
 	$(PYTHON) setup.py build_ext --inplace
 
 .PHONY: test
-test: build_ext
+test:
 	$(TESTRUNNER) $(TESTRUNNERFLAGS)
 
 .PHONY: wheels
