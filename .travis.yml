@@ -7,8 +7,11 @@ matrix:
       services:
         - docker
       env:
-        - PIP=pip
+        - PIP=pip2.7
+        - PYTHON=python2.7
         - CIBW_BUILD=cp27-*
+        - TOXENV=py27
+
     - name: linux-py34
       language: python
       python: 3.4
@@ -16,8 +19,11 @@ matrix:
       services:
         - docker
       env:
-        - PIP=pip
+        - PIP=pip3.4
+        - PYTHON=python3.4
         - CIBW_BUILD=cp34-*
+        - TOXENV=py34
+
     - name: linux-py35
       language: python
       python: 3.5
@@ -25,8 +31,11 @@ matrix:
       services:
         - docker
       env:
-        - PIP=pip3
+        - PIP=pip3.5
+        - PYTHON=python3.5
         - CIBW_BUILD=cp35-*
+        - TOXENV=py35
+
     - name: linux-py36
       language: python
       python: 3.6
@@ -34,8 +43,11 @@ matrix:
       services:
         - docker
       env:
-        - PIP=pip3
+        - PIP=pip3.6
+        - PYTHON=python3.6
         - CIBW_BUILD=cp36-*
+        - TOXENV=py36
+
     - name: linux-py37
       language: python
       python: 3.7
@@ -44,75 +56,94 @@ matrix:
       services:
         - docker
       env:
-        - PIP=pip3
+        - PIP=pip3.7
+        - PYTHON=python3.7
         - CIBW_BUILD=cp37-*
+        - TOXENV=py37
+
     - name: osx-py27
       os: osx
       language: generic
       env:
         - PATH="/Library/Frameworks/Python.framework/Versions/2.7/bin:$PATH"
-        - PIP=pip
+        - PIP=pip2.7
+        - PYTHON=python2.7
+        - TOXENV=py27
         - CIBW_BUILD=cp27-*
-        - CIBW_TEST_COMMAND="pushd {project}; make lint; make test ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install 'flake8<3' pytest"
+        - CIBW_TEST_COMMAND="make -C {project} lint test"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
         - cibuildwheel --output-dir dist
+
     - name: osx-py34
       os: osx
       language: generic
       env:
-        - PIP=pip2
+        - PIP=pip3.4
+        - PYTHON=python3.4
+        - TOXENV=py34
         - CIBW_BUILD=cp34-*
-        - CIBW_TEST_COMMAND="pushd {project}; make lint; make test ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install 'flake8<3' pytest"
+        - CIBW_TEST_COMMAND="make -C {project} lint test"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
         - cibuildwheel --output-dir dist
+
     - name: osx-py35
       os: osx
       language: generic
       env:
-        - PIP=pip2
+        - PIP=pip3.5
+        - PYTHON=python3.5
+        - TOXENV=py35
         - CIBW_BUILD=cp35-*
-        - CIBW_TEST_COMMAND="pushd {project}; make lint; make test ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install 'flake8<3' pytest"
+        - CIBW_TEST_COMMAND="make -C {project} lint test"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
         - cibuildwheel --output-dir dist
+
     - name: osx-py36
       os: osx
       language: generic
       env:
-        - PIP=pip2
+        - PIP=pip3.6
+        - PYTHON=python3.6
+        - TOXENV=py36
         - CIBW_BUILD=cp36-*
-        - CIBW_TEST_COMMAND="pushd {project}; make lint; make test ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install 'flake8<3' pytest"
+        - CIBW_TEST_COMMAND="make -C {project} lint test"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
         - cibuildwheel --output-dir dist
+
     - name: osx-py37
       os: osx
       language: generic
       env:
-        - PIP=pip2
+        - PIP=pip3.7
+        - PYTHON=python3.7
+        - TOXENV=py37
         - CIBW_BUILD=cp37-*
-        - CIBW_TEST_COMMAND="pushd {project}; make lint; make test ; popd"
-        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install 'flake8<3' pytest"
+        - CIBW_TEST_COMMAND="make -C {project} lint test"
+        - CIBW_BEFORE_BUILD="${PIP} install -U pip; ${PIP} install flake8"
       install:
         - ${PIP} install cibuildwheel==0.10.2
       script:
         - cibuildwheel --output-dir dist
+
 install:
-  - "${PIP} install -U pip"
-  - "${PIP} install 'flake8<3' pytest"
-  - "${PIP} install cibuildwheel==0.10.2"
+  - ${PIP} install -U pip
+  - ${PIP} install flake8 tox
+  - ${PIP} install cibuildwheel==0.10.2
+
 script:
   - make lint
-  - make test TESTRUNNER=pytest
+  - make test
   - git stash --all # Restore fresh checkout
   - cibuildwheel --output-dir dist
