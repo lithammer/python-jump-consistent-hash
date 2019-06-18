@@ -4,22 +4,21 @@ Jump Consistent Hash documentation!
 .. toctree::
    :maxdepth: 2
 
-Python implementation of the jump consistent hash algorithm by John Lamping and
-Eric Veach [1]_. Tested on Python 2.6, 2.7 and 3.4+.
+Python and C implementation of the jump consistent hash algorithm by John
+Lamping and Eric Veach [1]_. Tested on Python 2.7 and 3.4+.
 
 .. [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
 Install
 -------
 
-To install Jump Consistent Hash, simply run this simple command in your terminal of choice::
+To install Jump Consistent Hash, simply run this simple command in your
+terminal of choice::
 
    $ pip install jump-consistent-hash
 
-Unless running PyPy the installation will try to compile the C++ reference
-implementation (unless an appropriate wheel is available). If it fails it will
-fallback to the pure Python implementation if it fails which is about 10x
-slower on CPython.
+The C implementation is optional but is about 10x faster than the pure Python
+implementation in CPython.
 
 Usage
 -----
