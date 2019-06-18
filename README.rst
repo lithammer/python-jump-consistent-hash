@@ -6,7 +6,7 @@ Jump Consistent Hash
    :target: https://travis-ci.org/lithammer/python-jump-consistent-hash
 
 Python implementation of the jump consistent hash algorithm by John Lamping and
-Eric Veach[1]. Tested on Python 2.6, 2.7 and 3.4+.
+Eric Veach[1]. Tested on Python 2.7 and 3.4+.
 
 Install
 -------

@@ -1,23 +1,38 @@
 PYTHON ?= python
-TESTRUNNER ?= py.test
+TESTRUNNER ?= tox
 TESTRUNNERFLAGS ?= -v tests
 LINT := flake8
 LINTFLAGS := jump
 
+PLATFORMS = manylinux1_x86_64 manylinux1_i686 manylinux2010_x86_64
+
 all: build
 
-build: build_ext
+build: _jump.so
 
-build_ext: _jump.so
-
-_jump.so: jump/jump.cpp jump/jump.h jump/jumpmodule.c
+_jump.so: jump/jump.c
 	$(PYTHON) setup.py build_ext --inplace
 
-test: build_ext
+.PHONY: test
+test:
 	$(TESTRUNNER) $(TESTRUNNERFLAGS)
 
-test-all:
-	tox --skip-missing-interpreters
+.PHONY: wheels
+wheels: $(PLATFORMS)
+ifeq ($(shell uname -s),Darwin)
+	# https://github.com/drolando/homebrew-deadsnakes
+	python2.7 -m pip wheel $(CURDIR) -w wheelhouse
+	python3.4 -m pip wheel $(CURDIR) -w wheelhouse
+	python3.5 -m pip wheel $(CURDIR) -w wheelhouse
+	python3.6 -m pip wheel $(CURDIR) -w wheelhouse
+	python3.7 -m pip wheel $(CURDIR) -w wheelhouse
+endif
+
+$(PLATFORMS):
+	docker pull quay.io/pypa/$@
+	[ $@ = manylinux1_i686 ] && PRE_CMD=linux32; \
+		docker run --rm -e PLAT=$@ -v $(CURDIR):/shared \
+			quay.io/pypa/$@ $$PRE_CMD /shared/build-wheels.sh
 
 .PHONY: lint
 lint:

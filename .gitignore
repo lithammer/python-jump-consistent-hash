@@ -1,7 +1,12 @@
-.pytest_cache
-.tox
 *.py[co]
-*.egg-info
 *.so
-build
-docs/_build
+.ccls
+
+.ccls-cache/
+.mypy_cache/
+.pytest_cache/
+.tox/
+build/
+docs/_build/
+jump_consistent_hash.egg-info/
+wheelhouse/
