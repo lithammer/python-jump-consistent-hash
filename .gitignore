@@ -8,5 +8,6 @@
 .tox/
 build/
 docs/_build/
+env/
 jump_consistent_hash.egg-info/
 wheelhouse/
