@@ -81,7 +81,7 @@ matrix:
       os: osx
       language: generic
       env:
-        - PYTHON=python3.4
+        - PYTHON=python3
         - PIP="${PYTHON} -m pip"
         - TOXENV=py34
         - CIBW_BUILD=cp34-*
@@ -96,7 +96,7 @@ matrix:
       os: osx
       language: generic
       env:
-        - PYTHON=python3.5
+        - PYTHON=python3
         - PIP="${PYTHON} -m pip"
         - TOXENV=py35
         - CIBW_BUILD=cp35-*
@@ -111,7 +111,7 @@ matrix:
       os: osx
       language: generic
       env:
-        - PYTHON=python3.6
+        - PYTHON=python3
         - PIP="${PYTHON} -m pip"
         - TOXENV=py36
         - CIBW_BUILD=cp36-*
@@ -126,7 +126,7 @@ matrix:
       os: osx
       language: generic
       env:
-        - PYTHON=python3.7
+        - PYTHON=python3
         - PIP="${PYTHON} -m pip"
         - TOXENV=py37
         - CIBW_BUILD=cp37-*
