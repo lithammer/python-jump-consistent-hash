@@ -17,10 +17,13 @@ setup(
     author_email="peter.lithammer@gmail.com",
     license="MIT",
     url="https://github.com/lithammer/python-jump-consistent-hash",
-    packages=find_packages(),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     package_data={"jump": ["py.typed", "__init__.pyi"]},
     zip_safe=False,
-    ext_modules=[Extension("_jump", sources=["jump/jump.c"], optional=True)],
+    ext_modules=[
+        Extension("_jump", sources=["src/jump/jump.c"], optional=True)
+    ],
     keywords=[
         "jump hash",
         "jumphash",
