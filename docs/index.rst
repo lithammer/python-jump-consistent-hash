@@ -5,7 +5,7 @@ Jump Consistent Hash documentation!
    :maxdepth: 2
 
 Python and C implementation of the jump consistent hash algorithm by John
-Lamping and Eric Veach [1]_. Tested on Python 2.7 and 3.4+.
+Lamping and Eric Veach [1]_. Tested on Python 2.7 and 3.5+.
 
 .. [1] http://arxiv.org/pdf/1406.2294v1.pdf
 
