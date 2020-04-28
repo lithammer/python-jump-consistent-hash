@@ -10,7 +10,7 @@ with io.open(os.path.join(here, "README.rst"), encoding="utf-8") as f:
 
 setup(
     name="jump-consistent-hash",
-    version="3.1.0",
+    version="3.1.1",
     description="Implementation of the Jump Consistent Hash algorithm",
     long_description=long_description,
     author="Peter Lithammer",
