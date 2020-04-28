@@ -1,8 +1,8 @@
-name: Packaging
+name: Publish
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   build_sdist:
