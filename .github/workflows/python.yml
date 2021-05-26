@@ -7,33 +7,87 @@ on:
   pull_request:
     branches:
       - master
+  release:
+    types:
+      - published
 
 jobs:
-  tox:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
-        python-version:
-          - '3.6'
-          - '3.7'
-          - '3.8'
-          - '3.9'
+        os: [ubuntu-20.04, windows-2019, macos-10.15]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Needed to build non-native architectures.
+      # https://cibuildwheel.readthedocs.io/en/stable/faq/#emulation
+      - name: Setup QEMU
+        if: runner.os == 'Linux'
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
+      - name: Build wheels
+        uses: pypa/cibuildwheel@v2.2.2
+        env:
+          # While arm64 wheels can be built on x86_64, they cannot be tested.
+          # The ability to test the arm64 wheels will be added in a future
+          # release of cibuildwheel, once Apple Silicon CI runners are widely
+          # available.
+          CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: python_packages
+          path: ./wheelhouse/*.whl
+
+  build_sdist:
+    name: Build source distribution
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: '3.8'
 
-      - name: Install Tox
-        run: pip install tox tox-gh-actions
-        env:
-          PIP_CONSTRAINT: requirements.txt
+      - name: Install build
+        run: pip install build
 
-      - name: Test
-        run: tox
+      - name: Build sdist
+        run: python -m build -s
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: python_packages
+          path: dist/*.tar.gz
+
+  publish:
+    needs:
+      - build_wheels
+      - build_sdist
+    runs-on: ubuntu-latest
+    # if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
+    if: github.event_name == 'release' && github.event.action == 'published'
+    steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: python_packages
+          path: dist
+
+      - name: Publish packages to TestPyPI
+        uses: pypa/gh-action-pypi-publish@v1
+        with:
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+
+      - name: Publish packages to PyPI
+        uses: pypa/gh-action-pypi-publish@v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
