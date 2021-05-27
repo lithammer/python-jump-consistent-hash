@@ -8,6 +8,5 @@
 .tox/
 build/
 dist/
-docs/_build/
 env/
 src/jump_consistent_hash.egg-info/

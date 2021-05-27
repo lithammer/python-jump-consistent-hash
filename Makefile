@@ -25,7 +25,3 @@ clean:
 	$(RM) -r build dist *.egg-info docs/_build .tox .mypy_cache .pytest_cache
 	find . -name "*.py[co]" -delete
 	find . -name __pycache__ | xargs rm -rf
-
-.PHONY: docs
-docs: build_ext
-	$(MAKE) -C $@ html
