@@ -1,27 +1,31 @@
-PYTHON ?= python
-TESTRUNNER ?= tox
-TESTRUNNERFLAGS ?= -v tests
-LINT := flake8
-LINTFLAGS := jump
+BINDIR = $(VIRTUALENV)/bin
+PYTHON ?= python3
+VIRTUALENV = venv
 
-all: build
+all: test
 
-build: _jump.so
+compile_commands.json:
+	bear -- $(PYTHON) setup.py build_ext -qf
 
-_jump.so: jump/jump.c
-	$(PYTHON) setup.py build_ext --inplace
+.PHONY: venv
+venv: $(VIRTUALENV)/freeze.txt
+
+$(VIRTUALENV)/freeze.txt: requirements.txt
+	$(PYTHON) -m venv $(@D)
+	$(BINDIR)/pip install -U pip setuptools wheel
+	$(BINDIR)/pip install -r $< -e $(CURDIR)
+	$(BINDIR)/pip freeze -r $< > $@
 
 .PHONY: test
-test:
-	$(TESTRUNNER) $(TESTRUNNERFLAGS)
+test: $(VIRTUALENV)
+	$(BINDIR)/tox
 
 .PHONY: lint
-lint:
-	$(LINT) $(LINTFLAGS)
+lint: $(VIRTUALENV)
+	$(BINDIR)/black --check src
+	$(BINDIR)/flake8 src
+	$(BINDIR)/mypy src
 
 .PHONY: clean
 clean:
-	$(RM) _jump*.so
-	$(RM) -r build dist *.egg-info docs/_build .tox .mypy_cache .pytest_cache
-	find . -name "*.py[co]" -delete
-	find . -name __pycache__ | xargs rm -rf
+	git clean -Xdf

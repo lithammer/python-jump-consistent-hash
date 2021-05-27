@@ -1,12 +1,11 @@
 *.py[co]
 *.so
-.ccls
 
-.ccls-cache/
+*.egg-info/
 .mypy_cache/
 .pytest_cache/
 .tox/
+__pycache__/
 build/
 dist/
-env/
-src/jump_consistent_hash.egg-info/
+venv/
