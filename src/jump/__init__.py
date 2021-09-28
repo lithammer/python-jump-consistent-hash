@@ -28,7 +28,7 @@ def py_hash(key, num_buckets):
     Raises:
         ValueError: If `num_buckets` is not a positive number.
     """
-    b, j = -1, 0
+    b, j = -1, 0.0
 
     if num_buckets < 1:
         raise ValueError(
