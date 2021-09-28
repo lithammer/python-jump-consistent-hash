@@ -1,7 +1,7 @@
 Jump Consistent Hash
 --------------------
 
-.. image:: https://github.com/lithammer/python-jump-consistent-hash/workflows/Test/badge.svg
+.. image:: https://github.com/lithammer/python-jump-consistent-hash/workflows/Python/badge.svg
    :alt: Build Status
    :target: https://github.com/lithammer/python-jump-consistent-hash/actions
 
