@@ -35,17 +35,17 @@ using Python 3:
 .. code:: python
 
    >>> import hashlib
-   >>> int(hashlib.md5(b'127.0.0.1').hexdigest(), 16)
+   >>> int(hashlib.md5(b"127.0.0.1").hexdigest(), 16)
    325870950296970981340734819828239218902
 
    >>> int(hashlib.sha1(b"127.0.0.1").hexdigest(), 16)
    431133456357828263809343936597625557575256328153
 
    >>> import binascii
-   >>> binascii.crc32(b'127.0.0.1') & 0xffffffff
+   >>> binascii.crc32(b"127.0.0.1") & 0xffffffff
    3619153832
 
-   >>> abs(hash('127.0.0.1'))
+   >>> abs(hash("127.0.0.1"))
    7536019783825143230
 
 Links
