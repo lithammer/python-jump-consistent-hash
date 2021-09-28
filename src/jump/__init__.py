@@ -1,18 +1,11 @@
 """Fast, minimal memory, consistent hash algorithm."""
 
-from __future__ import absolute_import
-
-import sys
-
 try:
     from _jump import hash as c_hash
 except ImportError:
     c_hash = None
 
 __all__ = ["hash"]
-
-if sys.version_info[0] > 2:
-    long = int
 
 
 def py_hash(key, num_buckets):
@@ -32,12 +25,12 @@ def py_hash(key, num_buckets):
 
     if num_buckets < 1:
         raise ValueError(
-            "'num_buckets' must be a positive number, got %d" % num_buckets
+            f"'num_buckets' must be a positive number, got {num_buckets}"
         )
 
     while j < num_buckets:
         b = int(j)
-        key = ((key * long(2862933555777941757)) + 1) & 0xFFFFFFFFFFFFFFFF
+        key = ((key * int(2862933555777941757)) + 1) & 0xFFFFFFFFFFFFFFFF
         j = float(b + 1) * (float(1 << 31) / float((key >> 33) + 1))
 
     return int(b)

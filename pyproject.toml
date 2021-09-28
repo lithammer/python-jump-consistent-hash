@@ -6,15 +6,21 @@ build-backend = "setuptools.build_meta"
 line-length = 79
 target-version = ["py36"]
 
+[tool.mypy]
+check_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+pretty = true
+show_column_numbers = true
+warn_unused_configs = true
+
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{27,35,36,37,38,39},black,flake8,mypy
+envlist = py{36,37,38,39},black,flake8,mypy
 
 [gh-actions]
 python =
-    2.7: py27
-    3.5: py35
     3.6: py36
     3.7: py37
     3.8: py38
