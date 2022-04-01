@@ -20,7 +20,7 @@ jobs:
         os: [ubuntu-20.04, windows-2019, macos-10.15]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # Needed to build non-native architectures.
       # https://cibuildwheel.readthedocs.io/en/stable/faq/#emulation
@@ -48,7 +48,7 @@ jobs:
     name: Build source distribution
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v3
