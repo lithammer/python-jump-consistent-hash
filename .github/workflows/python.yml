@@ -39,7 +39,7 @@ jobs:
           # available.
           CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: python_packages
           path: ./wheelhouse/*.whl
@@ -61,7 +61,7 @@ jobs:
       - name: Build sdist
         run: python -m build -s
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: python_packages
           path: dist/*.tar.gz
