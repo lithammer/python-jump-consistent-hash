@@ -26,7 +26,7 @@ jobs:
       # https://cibuildwheel.readthedocs.io/en/stable/faq/#emulation
       - name: Setup QEMU
         if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v1
+        uses: docker/setup-qemu-action@v2
         with:
           platforms: all
 
