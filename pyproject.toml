@@ -29,14 +29,16 @@ warn_unused_configs = true
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{36,37,38,39},black,flake8,mypy
+envlist = py{36,37,38,39,310,311},black,flake8,mypy
 
 [gh-actions]
 python =
     3.6: py36
     3.7: py37
     3.8: py38
-    3.9: py39, black, flake8, mypy
+    3.9: py39
+    3.10: py310
+    3.11: py311, black, flake8, mypy
 
 [testenv:black]
 deps = black
