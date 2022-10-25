@@ -1,6 +1,40 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm>=6.2"]
+requires = ["setuptools>=61", "setuptools-scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "jump-consistent-hash"
+description = "Implementation of the Jump Consistent Hash algorithm"
+readme = "README.rst"
+license = {text = "MIT"}
+requires-python = ">=3.8"
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+keywords = ["jump", "consistent", "hash", "jumphash", "algorithm"]
+
+dynamic = ["version"]
+
+[[project.authors]]
+name = "Peter Lithammer"
+email = "peter.lithammer@gmail.com"
+
+[project.urls]
+Source = "https://github.com/lithammer/python-jump-consistent-hash"
+Issues = "https://github.com/lithammer/python-jump-consistent-hash/issues"
+Changelog = "https://github.com/lithammer/python-jump-consistent-hash/releases"
+Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme"
 
 [tool.setuptools_scm]
 
@@ -29,12 +63,10 @@ warn_unused_configs = true
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{36,37,38,39,310,311},black,flake8,mypy
+envlist = py{38,39,310,311},black,flake8,mypy
 
 [gh-actions]
 python =
-    3.6: py36
-    3.7: py37
     3.8: py38
     3.9: py39
     3.10: py310

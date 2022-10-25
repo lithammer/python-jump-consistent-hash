@@ -1,14 +1,14 @@
 BINDIR = $(VIRTUALENV)/bin
 PYTHON ?= python3
-VIRTUALENV = venv
+VIRTUALENV = .venv
 
-all: test
+all: build
 
 compile_commands.json:
 	bear -- $(PYTHON) setup.py build_ext -qf
 
-.PHONY: venv
-venv: $(VIRTUALENV)/freeze.txt
+.PHONY: build
+build: $(VIRTUALENV)/freeze.txt
 
 $(VIRTUALENV)/freeze.txt: requirements.txt
 	$(PYTHON) -m venv $(@D)

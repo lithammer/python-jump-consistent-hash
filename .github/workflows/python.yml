@@ -50,16 +50,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-
-      - name: Install build
-        run: pip install build
-
       - name: Build sdist
-        run: python -m build -s
+        run: pipx run build --sdist
 
       - uses: actions/upload-artifact@v3
         with:
