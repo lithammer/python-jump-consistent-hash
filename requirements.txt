@@ -1,5 +1,5 @@
-black==21.5b2
-flake8==3.9.2
-mypy==0.812
-pytest==6.2.5
-tox==3.23.1
+black==22.10.0
+flake8==5.0.4
+mypy==0.982
+pytest==7.2.0
+tox==3.26.0
