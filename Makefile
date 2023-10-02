@@ -10,6 +10,7 @@ compile_commands.json:
 .PHONY: build
 build: $(VIRTUALENV)/freeze.txt
 
+$(VIRTUALENV): $(VIRTUALENV)/freeze.txt
 $(VIRTUALENV)/freeze.txt: requirements.txt
 	$(PYTHON) -m venv $(@D)
 	$(BINDIR)/pip install -U pip setuptools wheel
@@ -22,9 +23,7 @@ test: $(VIRTUALENV)
 
 .PHONY: lint
 lint: $(VIRTUALENV)
-	$(BINDIR)/black --check src
-	$(BINDIR)/flake8 src
-	$(BINDIR)/mypy src
+	$(BINDIR)/tox -e black,mypy,ruff
 
 .PHONY: clean
 clean:
