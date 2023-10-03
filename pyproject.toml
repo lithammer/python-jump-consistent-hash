@@ -21,6 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
 ]
 keywords = ["jump", "consistent", "hash", "jumphash", "algorithm"]
 
@@ -50,7 +51,7 @@ archs = ["auto", "aarch64"]
 
 [tool.black]
 line-length = 79
-target-version = ["py36"]
+target-version = ["py38"]
 
 [tool.mypy]
 check_untyped_defs = true
@@ -60,25 +61,26 @@ pretty = true
 show_column_numbers = true
 warn_unused_configs = true
 
+[tool.ruff]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.ruff.isort]
+force-sort-within-sections = true
+order-by-type = true
+
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = py{38,39,310,311},black,flake8,mypy
-
-[gh-actions]
-python =
-    3.8: py38
-    3.9: py39
-    3.10: py310
-    3.11: py311, black, flake8, mypy
+envlist = py{38,39,310,311,312},black,mypy,ruff
 
 [testenv:black]
 deps = black
 commands = black --check src tests setup.py
 
-[testenv:flake8]
-deps = flake8
-commands = flake8 src tests setup.py
+[testenv:ruff]
+deps = ruff
+commands = ruff src tests setup.py
 
 [testenv:mypy]
 deps = mypy
@@ -87,7 +89,7 @@ commands = mypy src
 [testenv]
 setenv =
     PIP_CONSTRAINT = requirements.txt
-passenv = PYTEST_ADDOPTS CFLAGS
+passenv = PYTEST_ADDOPTS,CFLAGS
 deps = pytest
 commands = pytest {posargs}
 """
