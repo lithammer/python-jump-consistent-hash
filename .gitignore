@@ -1,11 +1,14 @@
+compile_commands.json
 *.py[co]
 *.so
 
 *.egg-info/
+.cache/
 .mypy_cache/
 .pytest_cache/
-.tox/
+.ruff_cache/
+.venv/
+
 __pycache__/
 build/
 dist/
-venv/

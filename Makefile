@@ -1,29 +1,24 @@
-BINDIR = $(VIRTUALENV)/bin
-PYTHON ?= python3
 VIRTUALENV = .venv
 
 all: build
 
-compile_commands.json:
-	bear -- $(PYTHON) setup.py build_ext -qf
+compile_commands.json: build
+	bear -- rye run python setup.py build_ext -qf
 
-.PHONY: build
-build: $(VIRTUALENV)/freeze.txt
+build: $(VIRTUALENV)/requirements.lock
 
-$(VIRTUALENV): $(VIRTUALENV)/freeze.txt
-$(VIRTUALENV)/freeze.txt: requirements.txt
-	$(PYTHON) -m venv $(@D)
-	$(BINDIR)/pip install -U pip setuptools wheel
-	$(BINDIR)/pip install -r $< -e $(CURDIR)
-	$(BINDIR)/pip freeze -r $< > $@
+$(VIRTUALENV)/requirements.lock: requirements.lock requirements-dev.lock pyproject.toml
+	rye sync
+	@cp $< $@
 
 .PHONY: test
-test: $(VIRTUALENV)
-	$(BINDIR)/tox
+test: build
+	rye test -v
 
 .PHONY: lint
-lint: $(VIRTUALENV)
-	$(BINDIR)/tox -e black,mypy,ruff
+lint: build
+	rye run lint
+	clang-format --dry-run --Werror --style=file src/jump/*.c
 
 .PHONY: clean
 clean:
