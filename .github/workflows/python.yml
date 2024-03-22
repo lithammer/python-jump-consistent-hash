@@ -13,11 +13,11 @@ on:
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Build wheels on ${{ matrix.runs-on }}
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       matrix:
-        os: [ubuntu-22.04, windows-2019, macos-12]
+        runs-on: [ubuntu-22.04, windows-2019, macos-12]
 
     steps:
       - uses: actions/checkout@v4
@@ -39,9 +39,9 @@ jobs:
           # available.
           CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: python_packages
+          name: python-packages-${{ matrix.runs-on }}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -53,9 +53,9 @@ jobs:
       - name: Build sdist
         run: pipx run build --sdist
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: python_packages
+          name: python-packages-sdist
           path: dist/*.tar.gz
 
   publish:
@@ -68,8 +68,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: python_packages
+          pattern: python-packages-*
           path: dist
+          merge-multiple: true
 
       # - name: Publish packages to TestPyPI
       #   uses: pypa/gh-action-pypi-publish@release/v1
