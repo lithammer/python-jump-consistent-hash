@@ -41,7 +41,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: python_packages
+          name: python-packages-${{ matrix.runs-on }}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -55,7 +55,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: python_packages
+          name: python-packages-${{ matrix.runs-on }}
           path: dist/*.tar.gz
 
   publish:
@@ -68,8 +68,9 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: python_packages
+          pattern: python-packages-*
           path: dist
+          merge-multiple: true
 
       # - name: Publish packages to TestPyPI
       #   uses: pypa/gh-action-pypi-publish@release/v1
