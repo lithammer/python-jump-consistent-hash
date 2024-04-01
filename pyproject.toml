@@ -43,9 +43,6 @@ Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme
 test-command = "pytest {package}/tests"
 test-requires = "pytest"
 
-[tool.cibuildwheel.macos]
-archs = ["x86_64", "universal2", "arm64"]
-
 [tool.cibuildwheel.linux]
 archs = ["auto", "aarch64"]
 
