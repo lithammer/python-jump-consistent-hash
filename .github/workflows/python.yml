@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     strategy:
       matrix:
-        runs-on: [ubuntu-22.04, windows-2019, macos-12]
+        runs-on: [ubuntu-latest, windows-latest, macos-14]
 
     steps:
       - uses: actions/checkout@v4
@@ -32,16 +32,10 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.17.0
-        env:
-          # While arm64 wheels can be built on x86_64, they cannot be tested.
-          # The ability to test the arm64 wheels will be added in a future
-          # release of cibuildwheel, once Apple Silicon CI runners are widely
-          # available.
-          CIBW_TEST_SKIP: "*-macosx_arm64 *-macosx_universal2:arm64"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: python-packages-${{ matrix.runs-on }}
+          name: cibw-wheels-${{ matrix.runs-on }}-${{ strategy.job-index }}
           path: ./wheelhouse/*.whl
 
   build_sdist:
@@ -55,32 +49,32 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: python-packages-sdist
+          name: cibw-sdist
           path: dist/*.tar.gz
 
   publish:
     needs:
       - build_wheels
       - build_sdist
+    environment:
+      name: pypi
+      url: https://pypi.org/p/jump-consistent-hash
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
     # if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: python-packages-*
+          pattern: cibw-*
           path: dist
           merge-multiple: true
 
       # - name: Publish packages to TestPyPI
       #   uses: pypa/gh-action-pypi-publish@release/v1
       #   with:
-      #     user: __token__
-      #     password: ${{ secrets.TEST_PYPI_TOKEN }}
       #     repository_url: https://test.pypi.org/legacy/
 
       - name: Publish packages to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
