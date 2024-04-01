@@ -51,7 +51,12 @@ archs = ["auto", "aarch64"]
 
 [tool.rye]
 managed = true
-dev-dependencies = ["mypy", "ruff", "pytest", "setuptools"]
+dev-dependencies = [
+  "mypy",
+  "ruff",
+  "pytest",
+  "setuptools", # Required for `python setup.py build_ext`
+]
 
 [tool.rye.scripts]
 lint = { chain = ["lint:ruff-check", "lint:mypy", "lint:ruff-format"] }
