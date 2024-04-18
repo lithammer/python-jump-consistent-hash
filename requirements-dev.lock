@@ -20,10 +20,10 @@ packaging==24.0
 pluggy==1.4.0
     # via pytest
 pytest==8.1.1
-ruff==0.3.3
-setuptools==69.2.0
+ruff==0.4.0
+setuptools==69.5.1
 tomli==2.0.1
     # via mypy
     # via pytest
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via mypy
