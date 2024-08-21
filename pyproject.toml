@@ -46,20 +46,13 @@ test-requires = "pytest"
 [tool.cibuildwheel.linux]
 archs = ["auto", "aarch64"]
 
-[tool.rye]
-managed = true
+[tool.uv]
 dev-dependencies = [
   "mypy",
   "ruff",
   "pytest",
   "setuptools", # Required for `python setup.py build_ext`
 ]
-
-[tool.rye.scripts]
-lint = { chain = ["lint:ruff-check", "lint:mypy", "lint:ruff-format"] }
-"lint:ruff-check" = "ruff check --diff ."
-"lint:ruff-format" = "ruff format --check --diff ."
-"lint:mypy" = "mypy ."
 
 [tool.mypy]
 check_untyped_defs = true

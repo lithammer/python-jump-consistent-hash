@@ -3,21 +3,23 @@ VIRTUALENV = .venv
 all: build
 
 compile_commands.json: build
-	bear -- rye run python setup.py build_ext -qf
+	bear -- uv run -- python setup.py build_ext -qf
 
-build: $(VIRTUALENV)/requirements.lock
+build: $(VIRTUALENV)/uv.lock
 
-$(VIRTUALENV)/requirements.lock: requirements.lock requirements-dev.lock pyproject.toml
-	rye sync
+$(VIRTUALENV)/uv.lock: uv.lock pyproject.toml
+	uv sync
 	@cp $< $@
 
 .PHONY: test
 test: build
-	rye test -v
+	uv run -- pytest -v
 
 .PHONY: lint
 lint: build
-	rye run lint
+	uv run -- ruff check --diff $(CURDIR)
+	uv run -- ruff format --check --diff $(CURDIR)
+	uv run -- mypy $(CURDIR)
 	clang-format --dry-run --Werror --style=file src/jump/*.c
 
 .PHONY: clean
