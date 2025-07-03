@@ -36,6 +36,9 @@ Issues = "https://github.com/lithammer/python-jump-consistent-hash/issues"
 Changelog = "https://github.com/lithammer/python-jump-consistent-hash/releases"
 Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme"
 
+[tool.setuptools]
+ext-modules = [{ name = "_jump", sources = ["src/jump/jump.c"] }]
+
 [tool.setuptools_scm]
 
 [tool.cibuildwheel]
