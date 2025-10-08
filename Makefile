@@ -8,10 +8,10 @@ compile_commands.json: build
 	bear -- uv run -- python setup.py build_ext -qf
 
 build: $(VIRTUALENV)/uv.lock
+	uv pip install -e file://$(CURDIR)
 
 $(VIRTUALENV)/uv.lock: uv.lock pyproject.toml
 	uv sync
-	uv pip install -e file://$(CURDIR)
 	@cp $< $@
 
 test: build
