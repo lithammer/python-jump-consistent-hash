@@ -1,26 +1,26 @@
 VIRTUALENV = .venv
-UV_RUN = uv run --
 
 .PHONY: all build clean lint test
 
 all: build
 
 compile_commands.json: build
-	bear -- $(UV_RUN) python setup.py build_ext -qf
+	cp $</compile_commands.json $@
 
 build: $(VIRTUALENV)/uv.lock
+	uv build --wheel
 
 $(VIRTUALENV)/uv.lock: uv.lock pyproject.toml
 	uv sync
-	@cp $< $@
+	cp $< $@
 
 test: build
-	$(UV_RUN) pytest -v
+	uv run -- pytest -v
 
 lint: build
-	$(UV_RUN) ruff check --diff $(CURDIR)
-	$(UV_RUN) ruff format --check --diff $(CURDIR)
-	$(UV_RUN) mypy $(CURDIR)
+	uv run -- ruff check --diff $(CURDIR)
+	uv run -- ruff format --check --diff $(CURDIR)
+	uv run -- mypy $(CURDIR)
 	clang-format --dry-run --Werror --style=file src/jump/*.c
 
 clean:
