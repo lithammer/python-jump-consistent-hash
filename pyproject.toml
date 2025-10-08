@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=77.0.3", "setuptools-scm[toml]>=8.3"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "jump-consistent-hash"
@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 keywords = ["jump", "consistent", "hash", "jumphash", "algorithm"]
 
@@ -36,7 +37,13 @@ Issues = "https://github.com/lithammer/python-jump-consistent-hash/issues"
 Changelog = "https://github.com/lithammer/python-jump-consistent-hash/releases"
 Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme"
 
-[tool.setuptools_scm]
+[dependency-groups]
+dev = [
+  "mypy",
+  "ruff",
+  "pytest",
+  "setuptools", # Required for `python setup.py build_ext`
+]
 
 [tool.cibuildwheel]
 test-command = "pytest {package}/tests"
@@ -45,13 +52,8 @@ test-requires = "pytest"
 [tool.cibuildwheel.linux]
 archs = ["auto", "aarch64"]
 
-[tool.uv]
-dev-dependencies = [
-  "mypy",
-  "ruff",
-  "pytest",
-  "setuptools", # Required for `python setup.py build_ext`
-]
+# [tool.scikit-build]
+# build-dir = "build"
 
 [tool.mypy]
 check_untyped_defs = true
