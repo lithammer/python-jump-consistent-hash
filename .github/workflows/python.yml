@@ -17,18 +17,15 @@ jobs:
     runs-on: ${{ matrix.runs-on }}
     strategy:
       matrix:
-        runs-on: [ubuntu-latest, windows-latest, macos-14]
+        runs-on:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+          - windows-latest
+          - windows-11-arm
+          - macos-14
 
     steps:
       - uses: actions/checkout@v5
-
-      # Needed to build non-native architectures.
-      # https://cibuildwheel.readthedocs.io/en/stable/faq/#emulation
-      - name: Setup QEMU
-        if: runner.os == 'Linux'
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: all
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v3.2.0

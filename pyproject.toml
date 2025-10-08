@@ -54,9 +54,6 @@ ext-modules = [{ name = "_jump", sources = ["src/jump/jump.c"] }]
 test-command = "pytest {package}/tests"
 test-requires = "pytest"
 
-[tool.cibuildwheel.linux]
-archs = ["auto", "aarch64"]
-
 [tool.mypy]
 check_untyped_defs = true
 ignore_missing_imports = true
