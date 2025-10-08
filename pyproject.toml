@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
 ]
 keywords = ["jump", "consistent", "hash", "jumphash", "algorithm"]
 
@@ -36,6 +37,17 @@ Issues = "https://github.com/lithammer/python-jump-consistent-hash/issues"
 Changelog = "https://github.com/lithammer/python-jump-consistent-hash/releases"
 Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme"
 
+[dependency-groups]
+dev = [
+  "mypy",
+  "ruff",
+  "pytest",
+  "setuptools", # Required for `python setup.py build_ext`
+]
+
+[tool.setuptools]
+ext-modules = [{ name = "_jump", sources = ["src/jump/jump.c"] }]
+
 [tool.setuptools_scm]
 
 [tool.cibuildwheel]
@@ -44,14 +56,6 @@ test-requires = "pytest"
 
 [tool.cibuildwheel.linux]
 archs = ["auto", "aarch64"]
-
-[tool.uv]
-dev-dependencies = [
-  "mypy",
-  "ruff",
-  "pytest",
-  "setuptools", # Required for `python setup.py build_ext`
-]
 
 [tool.mypy]
 check_untyped_defs = true
