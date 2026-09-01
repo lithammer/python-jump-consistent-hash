@@ -20,7 +20,7 @@ test: build
 lint: build
 	uv run -- ruff check $(CURDIR)
 	uv run -- ruff format --check --diff $(CURDIR)
-	uv run -- mypy $(CURDIR)
+	uv run -- ty check $(CURDIR)
 	uv run -- clang-format --dry-run --Werror --style=file src/jump/*.c
 
 clean:
