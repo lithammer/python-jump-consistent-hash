@@ -5,7 +5,7 @@ VIRTUALENV = .venv
 all: build
 
 compile_commands.json: build
-	bear -- uv run -- python setup.py build_ext -qf
+	bear -- uv run -- python -c "from setuptools import setup; setup()" build_ext -qf
 
 build: $(VIRTUALENV)/uv.lock
 	uv pip install -e file://$(CURDIR)

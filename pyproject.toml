@@ -43,7 +43,7 @@ dev = [
   "ty",
   "ruff",
   "pytest",
-  "setuptools", # Required for `python setup.py build_ext`
+  "setuptools", # Required by the compile_commands.json target
 ]
 
 [tool.setuptools]
