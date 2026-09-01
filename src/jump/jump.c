@@ -39,7 +39,6 @@ PyDoc_STRVAR(jump__doc__, "Fast, minimal memory, consistent hash algorithm.");
 static PyObject *jump_hash(PyObject *self, PyObject *const *args,
 			   Py_ssize_t nargs)
 {
-	PyObject *key_obj, *num_buckets_obj;
 	uint64_t key;
 	long long num_buckets;
 	int overflow;
@@ -51,27 +50,16 @@ static PyObject *jump_hash(PyObject *self, PyObject *const *args,
 		return NULL;
 	}
 
-	/* Convert through __index__ first. On 3.9 the converters below still
-	 * fall back to __int__ and would silently truncate a float, where
-	 * 3.10+ and py_hash raise TypeError. */
-	key_obj = PyNumber_Index(args[0]);
-	if (key_obj == NULL)
+	/* (uint64_t)-1 is a legal masked key, so ask whether it was an error. */
+	key = PyLong_AsUnsignedLongLongMask(args[0]);
+	if (key == (uint64_t)-1 && PyErr_Occurred())
 		return NULL;
 
-	num_buckets_obj = PyNumber_Index(args[1]);
-	if (num_buckets_obj == NULL) {
-		Py_DECREF(key_obj);
-		return NULL;
-	}
-
-	/* Both are exact integers now, so neither conversion can fail.
-	 * PyLong_AsLongLongAndOverflow rather than PyLong_AsLong keeps the
+	/* PyLong_AsLongLongAndOverflow rather than PyLong_AsLong keeps the
 	 * bound off the width of C long, which differs on Windows. */
-	key = PyLong_AsUnsignedLongLongMask(key_obj);
-	num_buckets = PyLong_AsLongLongAndOverflow(num_buckets_obj, &overflow);
-
-	Py_DECREF(key_obj);
-	Py_DECREF(num_buckets_obj);
+	num_buckets = PyLong_AsLongLongAndOverflow(args[1], &overflow);
+	if (num_buckets == -1 && PyErr_Occurred())
+		return NULL;
 
 	if (overflow > 0 || num_buckets > INT32_MAX) {
 		PyErr_SetString(PyExc_OverflowError,
