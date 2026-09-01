@@ -21,7 +21,7 @@ lint: build
 	uv run -- ruff check --diff $(CURDIR)
 	uv run -- ruff format --check --diff $(CURDIR)
 	uv run -- mypy $(CURDIR)
-	clang-format --dry-run --Werror --style=file src/jump/*.c
+	uv run -- clang-format --dry-run --Werror --style=file src/jump/*.c
 
 clean:
 	git clean -Xdf

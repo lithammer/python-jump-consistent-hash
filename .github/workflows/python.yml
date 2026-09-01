@@ -12,6 +12,17 @@ on:
       - published
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.0.1
+
+      - name: Run linters
+        run: make lint
+
   build_wheels:
     name: Build wheels on ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
