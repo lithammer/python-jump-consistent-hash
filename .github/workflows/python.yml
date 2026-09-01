@@ -70,7 +70,6 @@ jobs:
     permissions:
       id-token: write
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - uses: actions/download-artifact@v8
@@ -78,11 +77,6 @@ jobs:
           pattern: cibw-*
           path: dist
           merge-multiple: true
-
-      # - name: Publish packages to TestPyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     repository_url: https://test.pypi.org/legacy/
 
       - name: Publish packages to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
