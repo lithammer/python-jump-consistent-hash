@@ -36,26 +36,69 @@ Raises:\n\
 
 PyDoc_STRVAR(jump__doc__, "Fast, minimal memory, consistent hash algorithm.");
 
-static PyObject *jump_hash(PyObject *self, PyObject *args)
+static PyObject *jump_hash(PyObject *self, PyObject *const *args,
+			   Py_ssize_t nargs)
 {
+	PyObject *key_obj, *num_buckets_obj;
 	uint64_t key;
-	int32_t num_buckets;
+	long long num_buckets;
+	int overflow;
 
-	if (!PyArg_ParseTuple(args, "Ki", &key, &num_buckets))
-		return NULL;
-
-	if (num_buckets < 1) {
-		PyErr_Format(PyExc_ValueError,
-			     "'num_buckets' must be a positive number, got %d",
-			     num_buckets);
+	if (nargs != 2) {
+		PyErr_Format(PyExc_TypeError,
+			     "function takes exactly 2 arguments (%zd given)",
+			     nargs);
 		return NULL;
 	}
 
-	return Py_BuildValue("i", jump_consistent_hash(key, num_buckets));
+	/* Convert through __index__ first. On 3.9 the converters below still
+	 * fall back to __int__ and would silently truncate a float, where
+	 * 3.10+ and py_hash raise TypeError. */
+	key_obj = PyNumber_Index(args[0]);
+	if (key_obj == NULL)
+		return NULL;
+
+	num_buckets_obj = PyNumber_Index(args[1]);
+	if (num_buckets_obj == NULL) {
+		Py_DECREF(key_obj);
+		return NULL;
+	}
+
+	/* Both are exact integers now, so neither conversion can fail.
+	 * PyLong_AsLongLongAndOverflow rather than PyLong_AsLong keeps the
+	 * bound off the width of C long, which differs on Windows. */
+	key = PyLong_AsUnsignedLongLongMask(key_obj);
+	num_buckets = PyLong_AsLongLongAndOverflow(num_buckets_obj, &overflow);
+
+	Py_DECREF(key_obj);
+	Py_DECREF(num_buckets_obj);
+
+	if (overflow > 0 || num_buckets > INT32_MAX) {
+		PyErr_SetString(PyExc_OverflowError,
+				"signed integer is greater than maximum");
+		return NULL;
+	}
+
+	if (overflow < 0 || num_buckets < INT32_MIN) {
+		PyErr_SetString(PyExc_OverflowError,
+				"signed integer is less than minimum");
+		return NULL;
+	}
+
+	if (num_buckets < 1) {
+		PyErr_Format(
+			PyExc_ValueError,
+			"'num_buckets' must be a positive number, got %lld",
+			num_buckets);
+		return NULL;
+	}
+
+	return PyLong_FromLong(jump_consistent_hash(key, (int32_t)num_buckets));
 }
 
-static PyMethodDef jump_methods[] = { { "hash", jump_hash, METH_VARARGS,
-					hash__doc__ },
+static PyMethodDef jump_methods[] = { { "hash",
+					(PyCFunction)(void (*)(void))jump_hash,
+					METH_FASTCALL, hash__doc__ },
 				      { NULL, NULL, 0, NULL } };
 
 /* jump_consistent_hash() is pure and the module holds no state, so it needs
