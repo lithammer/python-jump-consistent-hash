@@ -58,10 +58,30 @@ static PyMethodDef jump_methods[] = { { "hash", jump_hash, METH_VARARGS,
 					hash__doc__ },
 				      { NULL, NULL, 0, NULL } };
 
-static struct PyModuleDef jumpmodule = { PyModuleDef_HEAD_INIT, "jump._jump",
-					 jump__doc__, -1, jump_methods };
+/* jump_consistent_hash() is pure and the module holds no state, so it needs
+ * neither the GIL nor a per-interpreter copy. Declaring that requires
+ * multi-phase init; single-phase init silently re-enables the GIL
+ * process-wide on free-threaded builds. */
+static PyModuleDef_Slot jump_slots[] = {
+#if PY_VERSION_HEX >= 0x030C0000
+	{ Py_mod_multiple_interpreters, Py_MOD_PER_INTERPRETER_GIL_SUPPORTED },
+#endif
+#if PY_VERSION_HEX >= 0x030D0000
+	{ Py_mod_gil, Py_MOD_GIL_NOT_USED },
+#endif
+	{ 0, NULL }
+};
+
+static struct PyModuleDef jumpmodule = {
+	.m_base = PyModuleDef_HEAD_INIT,
+	.m_name = "jump._jump",
+	.m_doc = jump__doc__,
+	.m_size = 0,
+	.m_methods = jump_methods,
+	.m_slots = jump_slots,
+};
 
 PyMODINIT_FUNC PyInit__jump(void)
 {
-	return PyModule_Create(&jumpmodule);
+	return PyModuleDef_Init(&jumpmodule);
 }
