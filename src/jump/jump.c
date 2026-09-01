@@ -30,6 +30,8 @@ Returns:\n\
     The bucket number `key` computes to.\n\
 \n\
 Raises:\n\
+    TypeError: If `key` or `num_buckets` is not an integer.\n\
+    OverflowError: If `num_buckets` is outside the signed 32-bit range.\n\
     ValueError: If `num_buckets` is not a positive number.\n");
 
 PyDoc_STRVAR(jump__doc__, "Fast, minimal memory, consistent hash algorithm.");
