@@ -46,7 +46,7 @@ dev = [
 ]
 
 [tool.setuptools]
-ext-modules = [{ name = "_jump", sources = ["src/jump/jump.c"] }]
+ext-modules = [{ name = "jump._jump", sources = ["src/jump/jump.c"] }]
 
 [tool.setuptools_scm]
 

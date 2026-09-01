@@ -58,7 +58,7 @@ static PyMethodDef jump_methods[] = { { "hash", jump_hash, METH_VARARGS,
 					hash__doc__ },
 				      { NULL, NULL, 0, NULL } };
 
-static struct PyModuleDef jumpmodule = { PyModuleDef_HEAD_INIT, "jump",
+static struct PyModuleDef jumpmodule = { PyModuleDef_HEAD_INIT, "jump._jump",
 					 jump__doc__, -1, jump_methods };
 
 PyMODINIT_FUNC PyInit__jump(void)

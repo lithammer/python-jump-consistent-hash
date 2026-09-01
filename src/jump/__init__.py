@@ -3,7 +3,7 @@
 import operator
 
 try:
-    from _jump import hash as c_hash
+    from ._jump import hash as c_hash
 except ImportError:
     c_hash = None
 
