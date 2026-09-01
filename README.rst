@@ -45,8 +45,11 @@ using Python 3:
    >>> binascii.crc32(b"127.0.0.1") & 0xffffffff
    3619153832
 
-   >>> abs(hash("127.0.0.1"))
-   7536019783825143230
+Do not reach for the built-in ``hash()`` here. Python salts the hashes of
+``str`` objects with a seed chosen per process, so the same key lands in a
+different bucket after every restart and in every worker of a pool, which is
+the opposite of what consistent hashing is for. The functions above are stable
+across processes and machines.
 
 Links
 `````

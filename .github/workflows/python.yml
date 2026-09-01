@@ -12,6 +12,17 @@ on:
       - published
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: astral-sh/setup-uv@v10.0.1
+
+      - name: Run linters
+        run: make lint
+
   build_wheels:
     name: Build wheels on ${{ matrix.runs-on }}
     runs-on: ${{ matrix.runs-on }}
@@ -59,7 +70,6 @@ jobs:
     permissions:
       id-token: write
     runs-on: ubuntu-latest
-    # if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')
     if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - uses: actions/download-artifact@v8
@@ -67,11 +77,6 @@ jobs:
           pattern: cibw-*
           path: dist
           merge-multiple: true
-
-      # - name: Publish packages to TestPyPI
-      #   uses: pypa/gh-action-pypi-publish@release/v1
-      #   with:
-      #     repository_url: https://test.pypi.org/legacy/
 
       - name: Publish packages to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1

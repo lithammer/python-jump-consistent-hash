@@ -7,7 +7,7 @@ name = "jump-consistent-hash"
 description = "Implementation of the Jump Consistent Hash algorithm"
 readme = "README.rst"
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -16,12 +16,12 @@ classifiers = [
   "Operating System :: Microsoft :: Windows",
   "Operating System :: POSIX",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: Free Threading :: 2 - Beta",
 ]
 keywords = ["jump", "consistent", "hash", "jumphash", "algorithm"]
 
@@ -39,28 +39,21 @@ Documentation = "https://github.com/lithammer/python-jump-consistent-hash#readme
 
 [dependency-groups]
 dev = [
-  "mypy",
+  "clang-format",
+  "ty",
   "ruff",
   "pytest",
-  "setuptools", # Required for `python setup.py build_ext`
+  "setuptools", # Required by the compile_commands.json target
 ]
 
 [tool.setuptools]
-ext-modules = [{ name = "_jump", sources = ["src/jump/jump.c"] }]
+ext-modules = [{ name = "jump._jump", sources = ["src/jump/jump.c"] }]
 
 [tool.setuptools_scm]
 
 [tool.cibuildwheel]
 test-command = "pytest {package}/tests"
 test-requires = "pytest"
-
-[tool.mypy]
-check_untyped_defs = true
-ignore_missing_imports = true
-no_implicit_optional = true
-pretty = true
-show_column_numbers = true
-warn_unused_configs = true
 
 [tool.ruff]
 line-length = 79

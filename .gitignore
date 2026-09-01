@@ -4,7 +4,6 @@ compile_commands.json
 
 *.egg-info/
 .cache/
-.mypy_cache/
 .pytest_cache/
 .ruff_cache/
 .venv/

@@ -30,36 +30,89 @@ Returns:\n\
     The bucket number `key` computes to.\n\
 \n\
 Raises:\n\
+    TypeError: If `key` or `num_buckets` is not an integer.\n\
+    OverflowError: If `num_buckets` is outside the signed 32-bit range.\n\
     ValueError: If `num_buckets` is not a positive number.\n");
 
 PyDoc_STRVAR(jump__doc__, "Fast, minimal memory, consistent hash algorithm.");
 
-static PyObject *jump_hash(PyObject *self, PyObject *args)
+static PyObject *jump_hash(PyObject *self, PyObject *const *args,
+			   Py_ssize_t nargs)
 {
 	uint64_t key;
-	int32_t num_buckets;
+	long long num_buckets;
+	int overflow;
 
-	if (!PyArg_ParseTuple(args, "Ki", &key, &num_buckets))
-		return NULL;
-
-	if (num_buckets < 1) {
-		PyErr_Format(PyExc_ValueError,
-			     "'num_buckets' must be a positive number, got %d",
-			     num_buckets);
+	if (nargs != 2) {
+		PyErr_Format(PyExc_TypeError,
+			     "function takes exactly 2 arguments (%zd given)",
+			     nargs);
 		return NULL;
 	}
 
-	return Py_BuildValue("i", jump_consistent_hash(key, num_buckets));
+	/* (uint64_t)-1 is a legal masked key, so ask whether it was an error. */
+	key = PyLong_AsUnsignedLongLongMask(args[0]);
+	if (key == (uint64_t)-1 && PyErr_Occurred())
+		return NULL;
+
+	/* PyLong_AsLongLongAndOverflow rather than PyLong_AsLong keeps the
+	 * bound off the width of C long, which differs on Windows. */
+	num_buckets = PyLong_AsLongLongAndOverflow(args[1], &overflow);
+	if (num_buckets == -1 && PyErr_Occurred())
+		return NULL;
+
+	if (overflow > 0 || num_buckets > INT32_MAX) {
+		PyErr_SetString(PyExc_OverflowError,
+				"signed integer is greater than maximum");
+		return NULL;
+	}
+
+	if (overflow < 0 || num_buckets < INT32_MIN) {
+		PyErr_SetString(PyExc_OverflowError,
+				"signed integer is less than minimum");
+		return NULL;
+	}
+
+	if (num_buckets < 1) {
+		PyErr_Format(
+			PyExc_ValueError,
+			"'num_buckets' must be a positive number, got %lld",
+			num_buckets);
+		return NULL;
+	}
+
+	return PyLong_FromLong(jump_consistent_hash(key, (int32_t)num_buckets));
 }
 
-static PyMethodDef jump_methods[] = { { "hash", jump_hash, METH_VARARGS,
-					hash__doc__ },
+static PyMethodDef jump_methods[] = { { "hash",
+					(PyCFunction)(void (*)(void))jump_hash,
+					METH_FASTCALL, hash__doc__ },
 				      { NULL, NULL, 0, NULL } };
 
-static struct PyModuleDef jumpmodule = { PyModuleDef_HEAD_INIT, "jump",
-					 jump__doc__, -1, jump_methods };
+/* jump_consistent_hash() is pure and the module holds no state, so it needs
+ * neither the GIL nor a per-interpreter copy. Declaring that requires
+ * multi-phase init; single-phase init silently re-enables the GIL
+ * process-wide on free-threaded builds. */
+static PyModuleDef_Slot jump_slots[] = {
+#if PY_VERSION_HEX >= 0x030C0000
+	{ Py_mod_multiple_interpreters, Py_MOD_PER_INTERPRETER_GIL_SUPPORTED },
+#endif
+#if PY_VERSION_HEX >= 0x030D0000
+	{ Py_mod_gil, Py_MOD_GIL_NOT_USED },
+#endif
+	{ 0, NULL }
+};
+
+static struct PyModuleDef jumpmodule = {
+	.m_base = PyModuleDef_HEAD_INIT,
+	.m_name = "jump._jump",
+	.m_doc = jump__doc__,
+	.m_size = 0,
+	.m_methods = jump_methods,
+	.m_slots = jump_slots,
+};
 
 PyMODINIT_FUNC PyInit__jump(void)
 {
-	return PyModule_Create(&jumpmodule);
+	return PyModuleDef_Init(&jumpmodule);
 }

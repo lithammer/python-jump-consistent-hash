@@ -5,7 +5,7 @@ VIRTUALENV = .venv
 all: build
 
 compile_commands.json: build
-	bear -- uv run -- python setup.py build_ext -qf
+	bear -- uv run -- python -c "from setuptools import setup; setup()" build_ext -qf
 
 build: $(VIRTUALENV)/uv.lock
 	uv pip install -e file://$(CURDIR)
@@ -18,10 +18,10 @@ test: build
 	uv run -- pytest -v
 
 lint: build
-	uv run -- ruff check --diff $(CURDIR)
+	uv run -- ruff check $(CURDIR)
 	uv run -- ruff format --check --diff $(CURDIR)
-	uv run -- mypy $(CURDIR)
-	clang-format --dry-run --Werror --style=file src/jump/*.c
+	uv run -- ty check $(CURDIR)
+	uv run -- clang-format --dry-run --Werror --style=file src/jump/*.c
 
 clean:
 	git clean -Xdf
