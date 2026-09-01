@@ -21,19 +21,19 @@ def py_hash(key, num_buckets):
     Raises:
         ValueError: If `num_buckets` is not a positive number.
     """
-    b, j = -1, 0.0
-
     if num_buckets < 1:
         raise ValueError(
             f"'num_buckets' must be a positive number, got {num_buckets}"
         )
 
+    b, j = -1, 0.0
+
     while j < num_buckets:
         b = int(j)
-        key = ((key * int(2862933555777941757)) + 1) & 0xFFFFFFFFFFFFFFFF
-        j = float(b + 1) * (float(1 << 31) / float((key >> 33) + 1))
+        key = (key * 2862933555777941757 + 1) & 0xFFFFFFFFFFFFFFFF
+        j = (b + 1) * ((1 << 31) / ((key >> 33) + 1))
 
-    return int(b)
+    return b
 
 
 hash = c_hash or py_hash
