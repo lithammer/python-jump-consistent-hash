@@ -10,4 +10,8 @@ compile_commands.json
 
 __pycache__/
 build/
+.cmake-build/
 dist/
+
+.mise.local.toml
+tags

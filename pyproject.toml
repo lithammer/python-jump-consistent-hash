@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=77.0.3", "setuptools-scm[toml]>=8.3"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core>=0.11", "setuptools-scm>=8.3"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "jump-consistent-hash"
@@ -43,11 +43,21 @@ dev = [
   "ty",
   "ruff",
   "pytest",
-  "setuptools", # Required by the compile_commands.json target
 ]
 
-[tool.setuptools]
-ext-modules = [{ name = "jump._jump", sources = ["src/jump/jump.c"] }]
+[tool.uv]
+# uv keys the build on project metadata alone, so without these an edit to
+# the C sources leaves a stale extension installed.
+cache-keys = [
+  { file = "pyproject.toml" },
+  { file = "CMakeLists.txt" },
+  { file = "src/jump/**/*.c" },
+]
+
+[tool.scikit-build]
+build-dir = "build"
+wheel.packages = ["src/jump"]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
 
 [tool.setuptools_scm]
 
