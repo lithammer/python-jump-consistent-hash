@@ -45,6 +45,15 @@ dev = [
   "pytest",
 ]
 
+[tool.uv]
+# uv keys the build on project metadata alone, so without these an edit to
+# the C sources leaves a stale extension installed.
+cache-keys = [
+  { file = "pyproject.toml" },
+  { file = "CMakeLists.txt" },
+  { file = "src/jump/**/*.c" },
+]
+
 [tool.scikit-build]
 build-dir = "build"
 wheel.packages = ["src/jump"]
