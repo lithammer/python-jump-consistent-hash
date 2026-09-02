@@ -4,7 +4,8 @@ VIRTUALENV = .venv
 
 all: build
 
-compile_commands.json: build
+compile_commands.json: CMakeLists.txt pyproject.toml src/jump/jump.c $(VIRTUALENV)/uv.lock
+	uv pip install -e file://$(CURDIR)
 	cp build/compile_commands.json $@
 
 build: $(VIRTUALENV)/uv.lock
